@@ -8,19 +8,25 @@
                 <h4 class="card-title">{{ $page_title }}</h4>
             </div>
 
-            <form id="educationForm">
+            <form id="jobForm">
                 @csrf
                 <div class="card-body">
                     <div class="col-12 col-md-12">
                         <div class="form-group mb-3">
-                            <label for="education_name" class="form-label">Education Name</label>
-                            <input type="text" name="education_name" value="{{ old('education_name') }}" class="form-control border border-secondary px-3" placeholder="Ex: SD" id="education_name" aria-describedby="education_name">
+                            <label for="job_name" class="form-label">Job Name</label>
+                            <input type="text" name="job_name" value="{{ old('job_name') }}" class="form-control border border-secondary px-3" placeholder="Ex: Marketing" id="job_name" aria-describedby="job_name">
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-12">
+                        <div class="form-group mb-3">
+                            <label for="job_detail" class="form-label">Job Detail</label>
+                            <input type="text" name="job_detail" value="{{ old('job_detail') }}" class="form-control border border-secondary px-3" placeholder="Ex: Marketing Sales" id="job_detail" aria-describedby="job_detail">
                         </div>
                     </div>
                 </div>
 
                 <div class="card-footer bg-card-foot mt-2 text-end" style="border-radius:0px 0px 15px 15px;">
-                    <a class="btn btn-danger" href="{{ route('education.index') }}">
+                    <a class="btn btn-danger" href="{{ route('job.index') }}">
                         Back
                     </a>
                     <button type="submit" class="btn btn-success">Save</button>
@@ -34,21 +40,23 @@
 @push('bottom-js')
 <script>
     $(document).ready(function() {
-        $('#educationForm').submit(function(e) {
+        $('#jobForm').submit(function(e) {
             e.preventDefault();
 
-            let educationName = $('#education_name').val();
+            let jobName = $('#job_name').val();
+            let jobDetail = $('#job_detail').val();
 
             $.ajax({
-                url: `${globalURL}/storeEducation`,
+                url: `${globalURL}/storeJob`,
                 type: 'POST',
                 data: {
                     '_token': $('input[name="_token"]').val(),
-                    'name': educationName
+                    'name': jobName,
+                    'detail': jobDetail
                 },
                 success: function(response) {
                     alert('Data saved successfully!');
-                    window.location.href = "{{ route('education.index') }}";
+                    window.location.href = "{{ route('job.index') }}";
                 },
                 error: function(xhr, status, error) {
                     alert('Failed to save data!');

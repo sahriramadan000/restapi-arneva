@@ -17,7 +17,7 @@ class CooperativeController extends Controller
     public function getCooperative()
     {
         try {
-            $cooperative = Cooperative::all();
+            $cooperative = Cooperative::orderBy('id', 'ASC')->get();
 
             if ($cooperative->isNotEmpty()) {
                 $response = [

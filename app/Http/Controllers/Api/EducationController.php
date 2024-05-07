@@ -17,7 +17,7 @@ class EducationController extends Controller
     public function getEducation()
     {
         try {
-            $education = Education::all();
+            $education = Education::orderBy('id', 'ASC')->get();
 
             if ($education->isNotEmpty()) {
                 $response = [

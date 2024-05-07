@@ -22,7 +22,7 @@ class CooperativeMemberController extends Controller
     public function getCooperativeMember()
     {
         try {
-            $cooperativeMembers = CooperativeMember::all();
+            $cooperativeMembers = CooperativeMember::orderBy('id', 'ASC')->get();
 
             if ($cooperativeMembers->isNotEmpty()) {
                 $data = $cooperativeMembers->map(function ($cooperativeMember) {

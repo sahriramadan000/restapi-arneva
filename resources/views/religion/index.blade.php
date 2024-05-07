@@ -44,21 +44,26 @@
                     console.log(response);
                     $('#data-religion').empty();
 
-                    $.each(response.data, function(index, dt) {
-                        var editUrl = "{{ route('religion.edit', ':id') }}".replace(':id', dt.id);
-                        var deleteUrl = `${globalURL}/deleteReligion/${dt.id}`;
-                        var addList = `<tr>`+
-                                            `<td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold align-middle">${index+1}</span></td>`+
-                                            `<td><span class="text-secondary text-xs font-weight-bold align-middle">${dt.code}</span></td>`+
-                                            `<td><span class="text-secondary text-xs font-weight-bold align-middle">${dt.name}</span></td>`+
-                                            `<td>
-                                                <a href="${editUrl}" class="btn btn-sm bg-warning text-white">Edit</a>
-                                                <button onclick="confirmDelete(${dt.id}, '${deleteUrl}')" class="btn btn-sm bg-danger text-white">Delete</button>
-                                            </td>`+
-                                        `</tr>`;
+                    if (response.code === 404) {
+                        var noDataMessage = `<tr><td colspan="4" class="text-center">Data not found</td></tr>`;
+                        $('#data-religion').append(noDataMessage);
+                    } else {
+                        $.each(response.data, function(index, dt) {
+                            var editUrl = "{{ route('religion.edit', ':id') }}".replace(':id', dt.id);
+                            var deleteUrl = `${globalURL}/deleteReligion/${dt.id}`;
+                            var addList = `<tr>`+
+                                                `<td class="align-middle text-center"><span class="text-secondary text-xs font-weight-bold align-middle">${index+1}</span></td>`+
+                                                `<td><span class="text-secondary text-xs font-weight-bold align-middle">${dt.code}</span></td>`+
+                                                `<td><span class="text-secondary text-xs font-weight-bold align-middle">${dt.name}</span></td>`+
+                                                `<td>
+                                                    <a href="${editUrl}" class="btn btn-sm bg-warning text-white">Edit</a>
+                                                    <button onclick="confirmDelete(${dt.id}, '${deleteUrl}')" class="btn btn-sm bg-danger text-white">Delete</button>
+                                                </td>`+
+                                            `</tr>`;
 
-                        $('#data-religion').append(addList);
-                    });
+                            $('#data-religion').append(addList);
+                        });
+                    }
                 },
                 error: function(xhr, status, error) {
                     alert('Failed to load religion data!')

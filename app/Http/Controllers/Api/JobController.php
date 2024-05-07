@@ -17,7 +17,7 @@ class JobController extends Controller
     public function getJob()
     {
         try {
-            $job = Job::all();
+            $job = Job::orderBy('id', 'ASC')->get();
 
             if ($job->isNotEmpty()) {
                 $response = [

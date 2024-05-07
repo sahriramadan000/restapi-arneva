@@ -17,7 +17,7 @@ class ReligionController extends Controller
     public function getReligion()
     {
         try {
-            $religion = Religion::all();
+            $religion = Religion::orderBy('id', 'ASC')->get();
 
             if ($religion->isNotEmpty()) {
                 $response = [
